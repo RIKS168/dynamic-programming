@@ -1,0 +1,47 @@
+class Solution {
+public:
+   //recursion 
+    int slove(vector<int>& cost,int n){
+
+        if(n==1)return cost[1];
+        if(n==0)return cost[0];
+
+        int ans=cost[n]+min(slove(cost,n-1),slove(cost,n-2));
+        return ans;
+
+
+    }
+     //recusion+memorization
+     int slove2(vector<int>& cost,int n,vector<int>& dp){
+
+        if(n==1)return cost[1];
+        if(n==0)return cost[0];
+
+        if(dp[n]!=-1)return dp[n];
+         dp[n]=cost[n]+min(slove2(cost,n-1,dp),slove2(cost,n-2,dp));
+        return dp[n];
+
+
+    }
+//tabulation
+ int slove3(vector<int>& cost,int n,vector<int>& dp){
+
+        if(n==1)return cost[1];
+        if(n==0)return cost[0];
+
+        if(dp[n]!=-1)return dp[n];
+         dp[n]=cost[n]+min(slove2(cost,n-1,dp),slove2(cost,n-2,dp));
+        return dp[n];
+
+
+    }
+
+
+    int minCostClimbingStairs(vector<int>& cost) {
+        
+        int n=cost.size();
+        vector<int> dp(n+1,-1);
+        int ans=min(slove2(cost,n-1,dp),slove2(cost,n-2,dp));
+        return ans;
+    }
+};
